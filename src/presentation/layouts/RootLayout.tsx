@@ -1,21 +1,13 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Navbar from "../components/navbar/Navbar";
 
 const RootLayout: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
     <div>
-      <header>
-        <h1>startapp</h1>
-        <nav>
-          <ul>
-            <li>
-              <a href="/">Home</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <Navbar />
 
       <main>
         <Outlet />
