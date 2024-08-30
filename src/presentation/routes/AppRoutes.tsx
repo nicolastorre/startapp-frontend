@@ -4,8 +4,9 @@ import HomePage from "../pages/home/HomePage";
 import RootLayout from "../layouts/RootLayout";
 import ErrorPage from "../pages/error/ErrorPage";
 import LoginPage from "../pages/login/LoginPage";
-import ProtectedRoute from "../layouts/AuthLayout";
+import AuthLayout from "../layouts/AuthLayout";
 import DashBoardPage from "../pages/dashBoard/DashBoardPage";
+import NoAuthLayout from "../layouts/NoAuthLayout";
 
 const router = createBrowserRouter([
   {
@@ -15,18 +16,26 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />,
+        element: (
+          <NoAuthLayout>
+            <HomePage />
+          </NoAuthLayout>
+        ),
       },
       {
         path: "/login",
-        element: <LoginPage />,
+        element: (
+          <NoAuthLayout>
+            <LoginPage />
+          </NoAuthLayout>
+        ),
       },
       {
         path: "/dashboard",
         element: (
-          <ProtectedRoute>
+          <AuthLayout>
             <DashBoardPage />
-          </ProtectedRoute>
+          </AuthLayout>
         ),
       },
     ],
