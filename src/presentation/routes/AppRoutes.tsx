@@ -4,6 +4,8 @@ import HomePage from "../pages/home/HomePage";
 import RootLayout from "../layouts/RootLayout";
 import ErrorPage from "../pages/error/ErrorPage";
 import LoginPage from "../pages/login/LoginPage";
+import ProtectedRoute from "../layouts/AuthLayout";
+import DashBoardPage from "../pages/dashBoard/DashBoardPage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginPage />,
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <ProtectedRoute>
+            <DashBoardPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

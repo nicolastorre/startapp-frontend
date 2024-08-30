@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { LoginAuth } from "../../../domain/usecases/LoginAuth";
 import { AuthDataSource } from "../../../data/dataSources/AuthdataSource";
 import { AuthRepositoryImpl } from "../../../data/repositories/AuthRepositoryImpl";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const authDataSource = new AuthDataSource();
 const authRepository = new AuthRepositoryImpl(authDataSource);
@@ -12,6 +14,9 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
+  const authContext = useAuthContext();
+  const navigate = useNavigate();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -19,6 +24,8 @@ const LoginPage: React.FC = () => {
     try {
       const { connection } = await loginUser.execute(email, password);
       console.log("connection", connection);
+      authContext.setConnection(connection);
+      navigate("/dashboard", { replace: true });
     } catch (err: any) {
       setError(err.message || "error");
     }
