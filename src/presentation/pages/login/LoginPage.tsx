@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { LoginUser } from "../../../domain/usecases/LoginUser";
+import { LoginAuth } from "../../../domain/usecases/LoginAuth";
 import { AuthDataSource } from "../../../data/dataSources/AuthdataSource";
 import { AuthRepositoryImpl } from "../../../data/repositories/AuthRepositoryImpl";
 
 const authDataSource = new AuthDataSource();
 const authRepository = new AuthRepositoryImpl(authDataSource);
-const loginUser = new LoginUser(authRepository);
+const loginUser = new LoginAuth(authRepository);
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");

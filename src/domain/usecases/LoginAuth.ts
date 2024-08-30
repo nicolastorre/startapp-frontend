@@ -1,7 +1,7 @@
 import { AuthRepository } from "../interfaces/repositories/AuthRepository";
 import { Connection } from "../entities/Connection";
 
-export class LoginUser {
+export class LoginAuth {
   constructor(private authRepository: AuthRepository) {}
 
   async execute(
