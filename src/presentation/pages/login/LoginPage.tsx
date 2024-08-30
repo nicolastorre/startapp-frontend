@@ -17,9 +17,8 @@ const LoginPage: React.FC = () => {
     setError(null);
 
     try {
-      const { user, connection } = await loginUser.execute(email, password);
-      console.log("Authenticated user:", user);
-      // Redirect or update UI accordingly
+      const { connection } = await loginUser.execute(email, password);
+      console.log("connection", connection);
     } catch (err: any) {
       setError(err.message || "error");
     }

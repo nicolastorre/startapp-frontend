@@ -9,14 +9,13 @@ export class AuthRepositoryImpl implements AuthRepository {
   async login(
     email: string,
     password: string
-  ): Promise<{ user: User; connection: Connection }> {
+  ): Promise<{ connection: Connection }> {
     try {
       const data = await this.authDataSource.login(email, password);
 
-      const user = new User(data.id, data.name, data.email);
       const connection = new Connection(data.accessToken, data.refreshToken);
 
-      return { user, connection };
+      return { connection };
     } catch (error: any) {
       throw new Error(error.message || "Failed to authenticate");
     }
