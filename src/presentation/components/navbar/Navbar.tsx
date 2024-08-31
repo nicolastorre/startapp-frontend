@@ -12,21 +12,27 @@ const Navbar: React.FC = () => {
           startapp
         </Link>
         <div>
-          {!connection?.accessToken ? (
-            <>
-              <Link
-                to="/"
-                className="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded-md"
-              >
-                Home
-              </Link>
-              <Link
-                to="/login"
-                className="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded-md ml-4"
-              >
-                Login
-              </Link>
-            </>
+          <Link
+            to="/"
+            className="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded-md"
+          >
+            Home
+          </Link>
+          {!connection?.isAuthenticated ? (
+            <Link
+              to="/login"
+              className="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded-md ml-4"
+            >
+              Login
+            </Link>
+          ) : null}
+          {connection?.isAuthenticated ? (
+            <Link
+              to="/dashboard"
+              className="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded-md ml-4"
+            >
+              Dashboard
+            </Link>
           ) : null}
         </div>
       </div>

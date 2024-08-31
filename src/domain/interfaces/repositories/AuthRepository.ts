@@ -1,8 +1,6 @@
-import { User } from "../../entities/User";
-import { Connection } from "../../entities/Connection";
+import { Connection } from "../../entities/ConnectionEntity";
 
 export interface AuthRepository {
   login(email: string, password: string): Promise<{ connection: Connection }>;
-  getAuthenticatedUser(): Promise<User | null>;
-  getConnection(): Promise<Connection | null>;
+  refreshConnection(): Promise<{ connection: Connection }>;
 }

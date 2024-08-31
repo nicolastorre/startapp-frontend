@@ -1,5 +1,12 @@
-import React, { createContext, ReactNode, useState } from "react";
-import { ConnectionEntity } from "../../domain/interfaces/entities/ConnectionEntity";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
+import { ConnectionEntity } from "../../domain/interfaces/entities/Connection";
+import { AuthRepositoryImpl } from "../../data/repositories/AuthRepositoryImpl";
+import { AuthDataSource } from "../../data/dataSources/AuthdataSource";
+import { RefreshConnectionAuth } from "../../domain/usecases/refreshConnectionAuth";
+
+const authDataSource = new AuthDataSource();
+const authRepository = new AuthRepositoryImpl(authDataSource);
+const refreshConnectionAuth = new RefreshConnectionAuth(authRepository);
 
 export interface AuthContextType {
   connection: ConnectionEntity | null;
@@ -16,6 +23,22 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [connection, setConnection] = useState<ConnectionEntity | null>(null);
+
+  useEffect(() => {
+    const handleRefreshConnection = async () => {
+      try {
+        const { connection } = await refreshConnectionAuth.execute();
+        setConnection(connection);
+      } catch (err: any) {
+        // display toast error
+        console.log(err.message || "error");
+      }
+    };
+
+    handleRefreshConnection();
+
+    return () => {};
+  }, []);
 
   return (
     <AuthContext.Provider value={{ connection, setConnection }}>

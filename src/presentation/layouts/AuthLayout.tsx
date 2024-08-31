@@ -9,7 +9,7 @@ interface ProtectedRouteProps {
 const AuthLayout = ({ children }: ProtectedRouteProps) => {
   const { connection } = useAuthContext();
 
-  if (!connection?.accessToken) {
+  if (!connection?.isAuthenticated) {
     return <Navigate to="/" replace />;
   }
 

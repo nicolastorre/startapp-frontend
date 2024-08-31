@@ -1,6 +1,5 @@
 import { AuthRepository } from "../../domain/interfaces/repositories/AuthRepository";
-import { User } from "../../domain/entities/User";
-import { Connection } from "../../domain/entities/Connection";
+import { Connection } from "../../domain/entities/ConnectionEntity";
 import { AuthDataSource } from "../dataSources/AuthdataSource";
 
 export class AuthRepositoryImpl implements AuthRepository {
@@ -11,9 +10,9 @@ export class AuthRepositoryImpl implements AuthRepository {
     password: string
   ): Promise<{ connection: Connection }> {
     try {
-      const data = await this.authDataSource.login(email, password);
+      await this.authDataSource.login(email, password);
 
-      const connection = new Connection(data.accessToken, data.refreshToken);
+      const connection = new Connection(true);
 
       return { connection };
     } catch (error: any) {
@@ -21,16 +20,15 @@ export class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  async getAuthenticatedUser(): Promise<User | null> {
-    const user = JSON.parse(localStorage.getItem("user_info") || "null");
-    return user ? new User(user.id, user.name, user.email) : null;
-  }
+  async refreshConnection(): Promise<{ connection: Connection }> {
+    try {
+      await this.authDataSource.refreshConnection();
 
-  async getConnection(): Promise<Connection | null> {
-    const accessToken = localStorage.getItem("jwt_token");
-    const refreshToken = localStorage.getItem("refresh_token");
-    return accessToken && refreshToken
-      ? new Connection(accessToken, refreshToken)
-      : null;
+      const connection = new Connection(true);
+
+      return { connection };
+    } catch (error: any) {
+      throw new Error(error.message || "Failed to authenticate");
+    }
   }
 }

@@ -3,11 +3,11 @@ import { LoginAuth } from "../../../domain/usecases/LoginAuth";
 import { AuthDataSource } from "../../../data/dataSources/AuthdataSource";
 import { AuthRepositoryImpl } from "../../../data/repositories/AuthRepositoryImpl";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const authDataSource = new AuthDataSource();
 const authRepository = new AuthRepositoryImpl(authDataSource);
-const loginUser = new LoginAuth(authRepository);
+const loginAuth = new LoginAuth(authRepository);
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -22,8 +22,7 @@ const LoginPage: React.FC = () => {
     setError(null);
 
     try {
-      const { connection } = await loginUser.execute(email, password);
-      console.log("connection", connection);
+      const { connection } = await loginAuth.execute(email, password);
       authContext.setConnection(connection);
       navigate("/dashboard", { replace: true });
     } catch (err: any) {
