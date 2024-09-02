@@ -1,8 +1,8 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { ConnectionEntity } from "../../domain/interfaces/entities/Connection";
 import { AuthRepositoryImpl } from "../../data/repositories/AuthRepositoryImpl";
-import { AuthDataSource } from "../../data/dataSources/AuthdataSource";
-import { RefreshConnectionAuth } from "../../domain/usecases/refreshConnectionAuth";
+import { AuthDataSource } from "../../data/dataSources/AuthDataSource";
+import { RefreshConnectionAuth } from "../../domain/usecases/auth/RefreshConnectionAuth";
 
 const authDataSource = new AuthDataSource();
 const authRepository = new AuthRepositoryImpl(authDataSource);

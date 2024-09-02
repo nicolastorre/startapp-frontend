@@ -1,9 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useAuthMethod } from "../../hooks/useAuthMethod";
 
 const Navbar: React.FC = () => {
   const { connection } = useAuthContext();
+
+  const { logout } = useAuthMethod();
+
+  const handleLogout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    logout();
+  };
 
   return (
     <nav className="bg-blue-500 p-4 shadow-lg">
@@ -18,6 +26,14 @@ const Navbar: React.FC = () => {
           >
             Home
           </Link>
+          {connection?.isAuthenticated ? (
+            <Link
+              to="/dashboard"
+              className="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded-md ml-4"
+            >
+              Dashboard
+            </Link>
+          ) : null}
           {!connection?.isAuthenticated ? (
             <Link
               to="/login"
@@ -27,12 +43,12 @@ const Navbar: React.FC = () => {
             </Link>
           ) : null}
           {connection?.isAuthenticated ? (
-            <Link
-              to="/dashboard"
+            <button
+              onClick={handleLogout}
               className="text-white font-semibold hover:bg-blue-700 px-3 py-2 rounded-md ml-4"
             >
-              Dashboard
-            </Link>
+              Log out
+            </button>
           ) : null}
         </div>
       </div>

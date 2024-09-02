@@ -1,6 +1,6 @@
 import { AuthRepository } from "../../domain/interfaces/repositories/AuthRepository";
 import { Connection } from "../../domain/entities/ConnectionEntity";
-import { AuthDataSource } from "../dataSources/AuthdataSource";
+import { AuthDataSource } from "../dataSources/AuthDataSource";
 
 export class AuthRepositoryImpl implements AuthRepository {
   constructor(private authDataSource: AuthDataSource) {}
@@ -16,7 +16,19 @@ export class AuthRepositoryImpl implements AuthRepository {
 
       return { connection };
     } catch (error: any) {
-      throw new Error(error.message || "Failed to authenticate");
+      throw new Error(error.message || "Failed to login");
+    }
+  }
+
+  async logout(): Promise<{ connection: Connection }> {
+    try {
+      await this.authDataSource.logout();
+
+      const connection = new Connection(false);
+
+      return { connection };
+    } catch (error: any) {
+      throw new Error(error.message || "Failed to logout");
     }
   }
 
@@ -28,7 +40,7 @@ export class AuthRepositoryImpl implements AuthRepository {
 
       return { connection };
     } catch (error: any) {
-      throw new Error(error.message || "Failed to authenticate");
+      throw new Error(error.message || "Failed to refresh connection");
     }
   }
 }

@@ -1,33 +1,15 @@
 import React, { useState } from "react";
-import { LoginAuth } from "../../../domain/usecases/LoginAuth";
-import { AuthDataSource } from "../../../data/dataSources/AuthdataSource";
-import { AuthRepositoryImpl } from "../../../data/repositories/AuthRepositoryImpl";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import { useNavigate } from "react-router-dom";
-
-const authDataSource = new AuthDataSource();
-const authRepository = new AuthRepositoryImpl(authDataSource);
-const loginAuth = new LoginAuth(authRepository);
+import { useAuthMethod } from "../../hooks/useAuthMethod";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
 
-  const authContext = useAuthContext();
-  const navigate = useNavigate();
+  const { login } = useAuthMethod();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-
-    try {
-      const { connection } = await loginAuth.execute(email, password);
-      authContext.setConnection(connection);
-      navigate("/dashboard", { replace: true });
-    } catch (err: any) {
-      setError(err.message || "error");
-    }
+    login(email, password);
   };
 
   return (
@@ -72,7 +54,7 @@ const LoginPage: React.FC = () => {
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
-              Sign In
+              Log In
             </button>
             <a
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"

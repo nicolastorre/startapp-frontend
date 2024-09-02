@@ -25,6 +25,21 @@ export class AuthDataSource {
     return response.data;
   }
 
+  async logout(): Promise<LoginResponse> {
+    const route: string = "auth/logout";
+
+    const response = await axios.delete<LoginResponse>(
+      `${apiConfig.apiUrl}/${route}`,
+      { withCredentials: true }
+    );
+
+    if (!response.data) {
+      throw new Error("No data received from the server");
+    }
+
+    return response.data;
+  }
+
   async refreshConnection(): Promise<RefreshConnectionResponse> {
     const route: string = "auth/refreshConnection";
 
