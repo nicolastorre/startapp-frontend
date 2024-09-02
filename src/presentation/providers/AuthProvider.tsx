@@ -1,16 +1,11 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
-import { ConnectionEntity } from "../../domain/interfaces/entities/Connection";
-import { AuthRepositoryImpl } from "../../data/repositories/AuthRepositoryImpl";
-import { AuthDataSource } from "../../data/dataSources/AuthDataSource";
 import { RefreshConnectionAuth } from "../../domain/usecases/auth/RefreshConnectionAuth";
-
-const authDataSource = new AuthDataSource();
-const authRepository = new AuthRepositoryImpl(authDataSource);
-const refreshConnectionAuth = new RefreshConnectionAuth(authRepository);
+import { IConnection } from "../../domain/interfaces/entities/IConnection";
+import { container } from "tsyringe";
 
 export interface AuthContextType {
-  connection: ConnectionEntity | null;
-  setConnection: (connection: ConnectionEntity | null) => void;
+  connection: IConnection | null;
+  setConnection: (connection: IConnection | null) => void;
 }
 
 interface AuthProviderProps {
@@ -22,11 +17,14 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 );
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [connection, setConnection] = useState<ConnectionEntity | null>(null);
+  const [connection, setConnection] = useState<IConnection | null>(null);
 
   useEffect(() => {
     const handleRefreshConnection = async () => {
       try {
+        const refreshConnectionAuth = container.resolve<RefreshConnectionAuth>(
+          "RefreshConnectionAuth"
+        );
         const { connection } = await refreshConnectionAuth.execute();
         setConnection(connection);
       } catch (err: any) {

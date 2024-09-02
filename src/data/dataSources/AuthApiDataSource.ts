@@ -1,11 +1,14 @@
 import axios from "axios";
 import { apiConfig } from "../../app/config/apiConfig";
+import {
+  IAuthApiDataSource,
+  LoginResponse,
+  RefreshConnectionResponse,
+} from "../../domain/interfaces/dataSources/IAuthApiDataSource";
+import { injectable } from "tsyringe";
 
-interface LoginResponse {}
-
-interface RefreshConnectionResponse {}
-
-export class AuthDataSource {
+@injectable()
+export class AuthApiDataSource implements IAuthApiDataSource {
   async login(email: string, password: string): Promise<LoginResponse> {
     const route: string = "auth/login";
 

@@ -1,9 +1,13 @@
-import { AuthRepository } from "../../domain/interfaces/repositories/AuthRepository";
+import { inject, injectable } from "tsyringe";
 import { Connection } from "../../domain/entities/ConnectionEntity";
-import { AuthDataSource } from "../dataSources/AuthDataSource";
+import { IAuthRepository } from "../../domain/interfaces/repositories/IAuthRepository";
+import type { IAuthApiDataSource } from "../../domain/interfaces/dataSources/IAuthApiDataSource";
 
-export class AuthRepositoryImpl implements AuthRepository {
-  constructor(private authDataSource: AuthDataSource) {}
+@injectable()
+export class AuthRepositoryImpl implements IAuthRepository {
+  constructor(
+    @inject("IAuthApiDataSource") private authDataSource: IAuthApiDataSource
+  ) {}
 
   async login(
     email: string,

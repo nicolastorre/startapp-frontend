@@ -1,5 +1,5 @@
-import { ConnectionEntity } from "../interfaces/entities/Connection";
+import { IConnection } from "../interfaces/entities/IConnection";
 
-export class Connection implements ConnectionEntity {
+export class Connection implements IConnection {
   constructor(public isAuthenticated: boolean) {}
 }

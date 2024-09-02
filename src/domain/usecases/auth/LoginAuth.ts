@@ -1,8 +1,14 @@
-import { AuthRepository } from "../../interfaces/repositories/AuthRepository";
 import { Connection } from "../../entities/ConnectionEntity";
+import { inject, injectable } from "tsyringe";
+import { IBaseUseCase } from "../../interfaces/usecases/IBaseUsecase";
+import type { IAuthRepository } from "./../../interfaces/repositories/IAuthRepository";
 
-export class LoginAuth {
-  constructor(private authRepository: AuthRepository) {}
+@injectable()
+export class LoginAuth implements IBaseUseCase {
+  constructor(
+    @inject("IAuthRepository")
+    private authRepository: IAuthRepository
+  ) {}
 
   async execute(
     email: string,
