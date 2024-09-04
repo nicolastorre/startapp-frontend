@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
-import { ConnectionEntity } from "../../domain/interfaces/entities/Connection";
+import { ConnectionEntity } from "../../domain/interfaces/entities/IConnection";
 import { RefreshConnectionAuth } from "../../domain/usecases/auth/RefreshConnectionAuth";
 import { Container } from "../../Container";
 

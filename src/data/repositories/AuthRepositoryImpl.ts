@@ -1,8 +1,8 @@
-import { AuthRepository } from "../../domain/interfaces/repositories/AuthRepository";
-import { Connection } from "../../domain/entities/ConnectionEntity";
+import { IAuthRepository } from "../../domain/interfaces/repositories/IAuthRepository";
+import { Connection } from "../../domain/entities/Connection";
 import { AuthDataSource } from "../dataSources/AuthDataSource";
 
-export class AuthRepositoryImpl implements AuthRepository {
+export class AuthRepositoryImpl implements IAuthRepository {
   constructor(private authDataSource: AuthDataSource) {}
 
   async login(

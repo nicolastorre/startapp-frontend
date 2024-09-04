@@ -1,5 +1,5 @@
-import { AuthRepository } from "../../interfaces/repositories/AuthRepository";
-import { Connection } from "../../entities/ConnectionEntity";
+import { AuthRepository } from "../../interfaces/repositories/IAuthRepository";
+import { Connection } from "../../entities/Connection";
 
 export class LoginAuth {
   constructor(private authRepository: AuthRepository) {}
