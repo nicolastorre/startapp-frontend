@@ -1,11 +1,11 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
-import { ConnectionEntity } from "../../domain/interfaces/entities/IConnection";
+import { IConnection } from "../../domain/interfaces/entities/IConnection";
 import { RefreshConnectionAuth } from "../../domain/usecases/auth/RefreshConnectionAuth";
 import { Container } from "../../Container";
 
 export interface AuthContextType {
-  connection: ConnectionEntity | null;
-  setConnection: (connection: ConnectionEntity | null) => void;
+  connection: IConnection | null;
+  setConnection: (connection: IConnection | null) => void;
 }
 
 interface AuthProviderProps {
@@ -17,7 +17,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 );
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [connection, setConnection] = useState<ConnectionEntity | null>(null);
+  const [connection, setConnection] = useState<IConnection | null>(null);
 
   useEffect(() => {
     const handleRefreshConnection = async () => {

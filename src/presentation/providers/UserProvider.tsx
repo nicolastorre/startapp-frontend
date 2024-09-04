@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useReducer } from "react";
 import { User } from "../../domain/entities/User";
+import { Role } from "../../domain/enums/Role";
 
 export interface UserContextType {
   userState: User | null;
@@ -13,6 +14,7 @@ interface UserProviderProps {
 const initialState: User = {
   uuid: "",
   email: "",
+  role: Role.USER,
 };
 
 type UserAction = { type: "UPDATE"; payload: User };
