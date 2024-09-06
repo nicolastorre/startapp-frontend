@@ -1,6 +1,6 @@
 import React from "react";
 
-const Dashboard: React.FC = () => {
+const DashboardPage: React.FC = () => {
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
@@ -55,4 +55,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;

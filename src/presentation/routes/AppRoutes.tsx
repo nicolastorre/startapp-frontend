@@ -7,6 +7,7 @@ import LoginPage from "../pages/login/LoginPage";
 import AuthLayout from "../layouts/AuthLayout";
 import DashBoardPage from "../pages/dashBoard/DashBoardPage";
 import NoAuthLayout from "../layouts/NoAuthLayout";
+import ProfilePage from "../pages/profile/ProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout>
             <DashBoardPage />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <AuthLayout>
+            <ProfilePage />
           </AuthLayout>
         ),
       },
