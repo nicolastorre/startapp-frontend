@@ -1,11 +1,11 @@
+import { IConnection } from "../../interfaces/entities/IConnection";
 import { IAuthRepository } from "../../interfaces/repositories/IAuthRepository";
-import { Connection } from "../../entities/Connection";
 import { IBaseUsecase } from "../../interfaces/usecases/IBaseUsecase";
 
 export class LogoutAuth implements IBaseUsecase {
   constructor(private authRepository: IAuthRepository) {}
 
-  async execute(): Promise<{ connection: Connection }> {
+  async execute(): Promise<IConnection> {
     return this.authRepository.logout();
   }
 }

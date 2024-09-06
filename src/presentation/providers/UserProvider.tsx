@@ -14,6 +14,8 @@ interface UserProviderProps {
 const initialState: User = {
   uuid: "",
   email: "",
+  firstname: "",
+  name: "",
   role: Role.USER,
 };
 

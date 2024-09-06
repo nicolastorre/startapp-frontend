@@ -1,10 +1,11 @@
 import React from "react";
+import { useGetProfileUser } from "../../hooks/user/useGetProfileUser";
+import { useUserContext } from "../../hooks/user/useUserContext";
 
 const ProfilePage: React.FC = () => {
-  const user = {
-    name: "John Doe",
-    email: "johndoe@example.com",
-  };
+  const userContext = useUserContext();
+
+  useGetProfileUser();
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -15,10 +16,12 @@ const ProfilePage: React.FC = () => {
           <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
             <p className="text-gray-700 mb-2">
-              <span className="font-bold">Name:</span> {user.name}
+              <span className="font-bold">Name: </span>
+              {userContext?.userState?.firstname} {userContext?.userState?.name}
             </p>
             <p className="text-gray-700">
-              <span className="font-bold">Email:</span> {user.email}
+              <span className="font-bold">Email: </span>
+              {userContext?.userState?.email}
             </p>
           </div>
 

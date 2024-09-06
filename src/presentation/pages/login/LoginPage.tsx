@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuthMethod } from "../../hooks/useAuthMethod";
+import { useAuthMethod } from "../../hooks/auth/useAuthMethod";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");

@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         const refreshConnectionAuth = Container.get<RefreshConnectionAuth>(
           "RefreshConnectionAuth"
         );
-        const { connection } = await refreshConnectionAuth.execute();
+        const connection = await refreshConnectionAuth.execute();
         setConnection(connection);
       } catch (err: any) {
         // display toast error

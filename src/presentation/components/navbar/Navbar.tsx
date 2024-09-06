@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import { useAuthMethod } from "../../hooks/useAuthMethod";
+import { useAuthContext } from "../../hooks/auth/useAuthContext";
+import { useAuthMethod } from "../../hooks/auth/useAuthMethod";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -8,18 +8,10 @@ export class AuthDataSource {
   async login(email: string, password: string): Promise<LoginResponse> {
     const route: string = "/auth/login";
 
-    const response = await axiosInstance.post<LoginResponse>(
-      route,
-      {
-        email,
-        password,
-      },
-      { withCredentials: true }
-    );
-
-    if (!response.data) {
-      throw new Error("No data received from the server");
-    }
+    const response = await axiosInstance.post<LoginResponse>(route, {
+      email,
+      password,
+    });
 
     return response.data;
   }
@@ -27,13 +19,7 @@ export class AuthDataSource {
   async logout(): Promise<LoginResponse> {
     const route: string = "auth/logout";
 
-    const response = await axiosInstance.delete<LoginResponse>(route, {
-      withCredentials: true,
-    });
-
-    if (!response.data) {
-      throw new Error("No data received from the server");
-    }
+    const response = await axiosInstance.delete<LoginResponse>(route);
 
     return response.data;
   }
@@ -41,15 +27,7 @@ export class AuthDataSource {
   async refreshConnection(): Promise<RefreshConnectionResponse> {
     const route: string = "auth/refreshConnection";
 
-    const response = await axiosInstance.post<RefreshConnectionResponse>(
-      route,
-      {},
-      { withCredentials: true }
-    );
-
-    if (!response.data) {
-      throw new Error("No data received from the server");
-    }
+    const response = await axiosInstance.post<RefreshConnectionResponse>(route);
 
     return response.data;
   }
