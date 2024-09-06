@@ -1,5 +1,4 @@
-import axios from "axios";
-import { apiConfig } from "../../app/config/apiConfig";
+import axiosInstance from "../../app/config/axiosConfig";
 
 interface LoginResponse {}
 
@@ -7,10 +6,10 @@ interface RefreshConnectionResponse {}
 
 export class AuthDataSource {
   async login(email: string, password: string): Promise<LoginResponse> {
-    const route: string = "auth/login";
+    const route: string = "/auth/login";
 
-    const response = await axios.post<LoginResponse>(
-      `${apiConfig.apiUrl}/${route}`,
+    const response = await axiosInstance.post<LoginResponse>(
+      route,
       {
         email,
         password,
@@ -28,10 +27,9 @@ export class AuthDataSource {
   async logout(): Promise<LoginResponse> {
     const route: string = "auth/logout";
 
-    const response = await axios.delete<LoginResponse>(
-      `${apiConfig.apiUrl}/${route}`,
-      { withCredentials: true }
-    );
+    const response = await axiosInstance.delete<LoginResponse>(route, {
+      withCredentials: true,
+    });
 
     if (!response.data) {
       throw new Error("No data received from the server");
@@ -43,8 +41,8 @@ export class AuthDataSource {
   async refreshConnection(): Promise<RefreshConnectionResponse> {
     const route: string = "auth/refreshConnection";
 
-    const response = await axios.post<RefreshConnectionResponse>(
-      `${apiConfig.apiUrl}/${route}`,
+    const response = await axiosInstance.post<RefreshConnectionResponse>(
+      route,
       {},
       { withCredentials: true }
     );
