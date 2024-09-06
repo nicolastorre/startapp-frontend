@@ -7,21 +7,21 @@ import { useEffect } from "react";
 export function useGetProfileUser(): void {
   const userContext = useUserContext();
 
-  const getProfile = async (): Promise<IUser | null> => {
-    try {
-      const getProfileUser = Container.get<GetProfileUser>("GetProfileUser");
-      const user = await getProfileUser.execute();
-      userContext.updateUser(user);
-
-      return user;
-    } catch (err: any) {
-      console.error(err.message || "error");
-    }
-
-    return null;
-  };
-
   useEffect(() => {
+    const getProfile = async (): Promise<IUser | null> => {
+      try {
+        const getProfileUser = Container.get<GetProfileUser>("GetProfileUser");
+        const user = await getProfileUser.execute();
+        userContext.updateUser(user);
+
+        return user;
+      } catch (err: any) {
+        console.error(err.message || "error");
+      }
+
+      return null;
+    };
+
     getProfile();
   }, []);
 }
