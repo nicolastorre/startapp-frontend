@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <div className="text-white text-2xl font-bold">
-            <Link to="/">My Website</Link>
+            <Link to="/">STARTAPP</Link>
           </div>
           <div className="block lg:hidden">
             <button
