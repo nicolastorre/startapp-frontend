@@ -1,6 +1,13 @@
-import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { apiConfig } from "../../app/config/apiConfig";
 import Cookies from "js-cookie";
+import { Container } from "../../Container";
+import { RefreshConnectionAuth } from "../../domain/usecases/auth/RefreshConnectionAuth";
 
 const axiosInstance = axios.create({
   baseURL: apiConfig.apiUrl,
@@ -27,8 +34,30 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-  (response: AxiosResponse) => response,
-  (error) => {
+  (response: AxiosResponse) => {
+    return response;
+  },
+  async (error: AxiosError) => {
+    const originalRequest = error.config as AxiosRequestConfig & {
+      _retry?: boolean;
+    };
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true; // Pour éviter de boucler infiniment
+
+      try {
+        const refreshConnectionAuth = Container.get<RefreshConnectionAuth>(
+          "RefreshConnectionAuth"
+        );
+        await refreshConnectionAuth.execute();
+
+        return axiosInstance(originalRequest);
+      } catch (err) {
+        console.error(err instanceof Error ? err.message : "Undefined error");
+        return Promise.reject(err);
+      }
+    }
+
     return Promise.reject(error);
   }
 );
