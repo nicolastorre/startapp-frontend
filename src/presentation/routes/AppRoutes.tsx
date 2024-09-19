@@ -8,6 +8,8 @@ import AuthLayout from "../layouts/AuthLayout";
 import DashBoardPage from "../pages/dashBoard/DashBoardPage";
 import NoAuthLayout from "../layouts/NoAuthLayout";
 import ProfilePage from "../pages/profile/ProfilePage";
+import UserListPage from "../pages/userList/UserListPage";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -29,11 +31,25 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: (
-          <AuthLayout>
-            <DashBoardPage />
-          </AuthLayout>
-        ),
+        element: <DashboardLayout />,
+        children: [
+          {
+            path: "/dashboard",
+            element: (
+              <AuthLayout>
+                <DashBoardPage />
+              </AuthLayout>
+            ),
+          },
+          {
+            path: "admin/users",
+            element: (
+              <AuthLayout>
+                <UserListPage />
+              </AuthLayout>
+            ),
+          },
+        ],
       },
       {
         path: "/profile",

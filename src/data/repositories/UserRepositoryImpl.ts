@@ -9,7 +9,15 @@ export class UserRepositoryImpl implements IUserRepository {
     try {
       return await this.userDataSource.getProfile();
     } catch (error: any) {
-      throw new Error(error.message || "Failed to login");
+      throw new Error(error.message || "Failed");
+    }
+  }
+
+  async getUserList(): Promise<Array<IUser>> {
+    try {
+      return await this.userDataSource.getUserList();
+    } catch (error: any) {
+      throw new Error(error.message || "Failed");
     }
   }
 }

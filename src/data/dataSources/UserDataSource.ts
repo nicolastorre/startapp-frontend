@@ -9,4 +9,12 @@ export class UserDataSource {
 
     return response.data;
   }
+
+  async getUserList(): Promise<Array<IUser>> {
+    const route: string = "/users";
+
+    const response = await axiosInstance.get<Array<IUser>>(route);
+
+    return response.data;
+  }
 }

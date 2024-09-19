@@ -7,6 +7,7 @@ import { LoginAuth } from "./domain/usecases/auth/LoginAuth";
 import { LogoutAuth } from "./domain/usecases/auth/LogoutAuth";
 import { RefreshConnectionAuth } from "./domain/usecases/auth/RefreshConnectionAuth";
 import { GetProfileUser } from "./domain/usecases/user/GetProfileUser";
+import { GetUserList } from "./domain/usecases/user/GetUserList";
 
 Container.registerLazy("AuthDataSource", () => new AuthDataSource());
 Container.registerLazy(
@@ -34,4 +35,8 @@ Container.registerLazy(
 Container.registerLazy(
   "GetProfileUser",
   () => new GetProfileUser(Container.get("UserRepositoryImpl"))
+);
+Container.registerLazy(
+  "GetUserList",
+  () => new GetUserList(Container.get("UserRepositoryImpl"))
 );
